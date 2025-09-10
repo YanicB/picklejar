@@ -1,9 +1,11 @@
+import MainPage from './pages/MainPage'
+
 function App() {
 
     return (
-        <>
-            <h1>pickle</h1>
-        </>
+        <div>
+            <MainPage />
+        </div>
     )
 }
 
