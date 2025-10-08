@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
     res.json({ message: "Received" })
 })
 
-app.use('/polls', pollsRouter)
+app.use('/api/polls', pollsRouter)
 
 export default app
 
