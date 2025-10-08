@@ -5,18 +5,38 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-    provider = "prisma-client-js"
-    output   = "../generated/prisma"
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User {
-    id String @id @default(uuid())
+enum pollPhase {
+    COLLECTING
+    VOTING
+    CLOSED
+}
+model Poll {
+    id Int @id @default(autoincrement())
+    title String
+    phase pollPhase @default(COLLECTING)
+    manageToken String @unique 
+    slug String @unique
     createdAt DateTime @default(now())
-    username String @unique
-    password String
+    updatedAt DateTime @updatedAt
+    
+    ideas Idea[]
+    votes Vote[]
+}
+
+model Idea {
+    id Int @default(autoincrement())
+    pollId Int 
+    authorName ?String
+    text String
+    poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade) //pollId in Idea corresponds to id in Poll
+    createdAt DateTime @default(now())
 }
