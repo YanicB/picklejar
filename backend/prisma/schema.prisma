@@ -15,28 +15,51 @@ datasource db {
 }
 
 enum pollPhase {
-    COLLECTING
-    VOTING
-    CLOSED
+  COLLECTING
+  VOTING
+  CLOSED
 }
+
 model Poll {
-    id Int @id @default(autoincrement())
-    title String
-    phase pollPhase @default(COLLECTING)
-    manageToken String @unique 
-    slug String @unique
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    
-    ideas Idea[]
-    votes Vote[]
+  id          Int       @id @default(autoincrement())
+  title       String
+  phase       pollPhase @default(COLLECTING)
+  manageToken String    @unique
+  slug        String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  ideas       Idea[]
+  votes       Vote[]
+  Participant Participant[]
 }
 
 model Idea {
-    id Int @default(autoincrement())
-    pollId Int 
-    authorName ?String
-    text String
-    poll Poll @relation(fields: [pollId], references: [id], onDelete: Cascade) //pollId in Idea corresponds to id in Poll
-    createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  pollId     Int
+  pollf      Poll     @relation(fields: [pollId], references: [id]) //pollId in Idea corresponds to id in Poll
+  authorName String?
+  text       String
+  createdAt  DateTime @default(now())
+  Vote       Vote[]
+}
+
+model Participant {
+  id     Int     @id @default(autoincrement())
+  pollId Int
+  pollf  Poll    @relation(fields: [pollId], references: [id]) //pollId in Idea corresponds to id in Poll
+  name   String?
+  email  String?
+  Vote   Vote[]
+}
+
+model Vote {
+  id            Int         @id @default(autoincrement())
+  pollId        Int
+  pollf         Poll        @relation(fields: [pollId], references: [id])
+  participantId Int
+  participantf  Participant @relation(fields: [participantId], references: [id])
+  ideaId        Int
+  ideaf         Idea        @relation(fields: [ideaId], references: [id])
+  createdAt     DateTime    @default(now())
 }
