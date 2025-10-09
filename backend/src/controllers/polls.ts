@@ -34,7 +34,7 @@ export const createPoll = async (req: Request, res: Response) => {
                 updatedAt: poll.updatedAt,
             },
             manageToken,
-            shareUrl: `${process.env.PUBLIC_BASE_URL || "http://localhost3000"}/p/$/{slug}`,
+            shareUrl: `${process.env.PUBLIC_BASE_URL || "http://localhost:3000"}/${slug}`,
         });
     } catch (err) {
         console.error(err);

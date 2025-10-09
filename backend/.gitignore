@@ -1,5 +1,21 @@
-node_modules
-# Keep environment variables out of version control
+node_modules/
 .env
+.env.*
+*.log
+dist/
+build/
+coverage/
+.DS_Store
 
-/generated/prisma
+# Prisma
+.prisma/
+# If you kept custom output (generated client outside node_modules)
+generated/prisma/
+
+# Dumps / keys
+*.sql
+*.dump
+*.pem
+*.key
+*.crt
+*.p12
