@@ -1,5 +1,4 @@
 import Jar from '../components/Jar';
-import SubmitIdea from '../components/SubmitIdea';
 import { getPoll } from '../services/polls'
 import { useState, useEffect } from 'react';
 
@@ -25,11 +24,10 @@ const PollsPage = () => {
 
     return (
         <div>
-            {ideas.map((idea: any) => (
-                <li key={idea.id}>
-                    {idea.text}
-                </li>
-            ))}
+            {title}
+            {phase}
+            < Jar ideas={ideas} />
+
         </div>
     )
 }
