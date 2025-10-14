@@ -24,10 +24,15 @@ const PollsPage = () => {
 
     return (
         <div>
-            {title}
-            {phase}
-            < Jar ideas={ideas} />
-
+            {loading ? (
+                <h3>Loading...</h3>
+            ) :
+                <div>
+                    {title}
+                    {phase}
+                    <Jar ideas={ideas} />
+                </div>
+            }
         </div>
     )
 }
