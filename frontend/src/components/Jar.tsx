@@ -5,7 +5,7 @@ type ideaItem = {
     authorName?: string | null;
     createdAt?: string;
 };
-const Jar = ({ ideas }: { ideas: ideaItem[] }) => {
+const Jar = ({ ideas }: { ideas?: ideaItem[] }) => {
     if (!ideas?.length) return <p>No ideas yet.</p>
     return (
         <ul className="w-100 h-100 bg-gray-300">
