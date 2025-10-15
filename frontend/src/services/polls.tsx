@@ -1,7 +1,7 @@
 import axios from 'axios'
 const baseUrl = 'api'
 
-export const newPoll = async ({ title }: { title: string }) => {
+export const newPoll = async (title: string) => {
     const res = await axios.post(`${baseUrl}/polls`, {
         title: title,
     });
@@ -13,7 +13,7 @@ export const getPoll = async (slug: string) => {
     return res.data; // {title, phase, ideas: []}
 }
 
-export const newIdea = async ({ text, slug }: { text: string, slug: string }) => {
+export const newIdea = async (text: string, slug: string) => {
     const res = await axios.post(`${baseUrl}/polls/${slug}/ideas`, {
         text: text,
     });
