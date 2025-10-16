@@ -1,31 +1,16 @@
-import { useState } from 'react'
-import { newPoll } from '../services/polls'
-
 const MainPage = () => {
-    const [title, setTitle] = useState('');
-
-    const createPoll = async (event: any) => {
-        event.preventDefault();
-        const res = await newPoll(title);
-    }
-
-    const handleTitleChange = (event: any) => {
-        setTitle(event.target.value);
-    }
     return (
-        <div>
-            <h1 className="font-bold">PickleJar</h1>
-            <form onSubmit={createPoll}>
-                <input
-                    type="text"
-                    value={title}
-                    onChange={handleTitleChange}
-                    placeholder="enter title"
-                />
-                <button type="submit">Submit</button>
-            </form>
+        <div className="flex flex-col">
+            <main className="flex-1 flex items-center justify-center">
+                <div className="text-center space-y-2">
+
+                    <p className="text-xl">in a pickle.</p>
+                    <button className="bg-green-300 py-1 px-3 rounded-md">get started.</button>
+                </div>
+            </main>
         </div>
-    );
+    )
+
 }
 
 export default MainPage
