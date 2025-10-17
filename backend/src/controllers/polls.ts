@@ -23,7 +23,6 @@ export const createPoll = async (req: Request, res: Response) => {
                 phase: "COLLECTING"
             },
         });
-        console.log(poll);
         res.status(201).json({
             poll: {
                 id: poll.id,
@@ -64,6 +63,49 @@ export const getPollBySlug = async (req: Request, res: Response) => {
             phase: poll.phase,
             ideas: poll.ideas,
         })
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Something went wrong." });
+    }
+}
+
+export const startVoting = async (req: Request, res: Response) => {
+    try {
+        const slug = req.params.slug;
+        const poll = await prisma.poll.findUnique({
+            where: {
+                slug,
+            },
+            include: { ideas: true },
+        });
+        if (!poll) {
+            return res.status(404).json({ error: "poll does not exist." });
+        }
+
+        const token = req.headers['x-manage-token'];
+
+        if (!token || typeof token !== "string") {
+            return res.status(403).json({ error: "Missing manage token." });
+        }
+        if (poll.manageToken !== token) {
+            return res.status(403).json({ error: "Invalid manage token." });
+        }
+
+        if (poll.phase !== "COLLECTING") {
+            return res.status(400).json({ error: "Poll is not in collection phase." });
+        }
+
+        if (poll.ideas.length === 0) {
+            return res.status(400).json({ error: "Cannot start voting with no ideas." });
+        }
+
+        const updatePoll = await prisma.poll.update({
+            where: { id: poll.id },
+            data: { phase: "VOTING" },
+        });
+
+        return res.status(200).json({ phase: updatePoll.phase });
 
     } catch (err) {
         console.log(err);
