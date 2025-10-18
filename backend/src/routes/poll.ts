@@ -1,13 +1,18 @@
 import { Router } from 'express';
-import { createPoll, getPollBySlug } from '../controllers/polls';
-import { addIdea } from '../controllers/ideas'
-const pollsRouter = Router()
+import { createPoll, getPollBySlug, startVoting } from '../controllers/polls';
+import { castVote, getResults } from '../controllers/votes';
+import { addIdea } from '../controllers/ideas';
+
+const pollsRouter = Router();
 
 pollsRouter.get('/:slug', getPollBySlug);
 pollsRouter.post('', createPoll);
 pollsRouter.delete('', () => { })
 pollsRouter.put('', () => { })
 pollsRouter.post('/:slug/ideas', addIdea);
+pollsRouter.post('/:slug/start-vote', startVoting);
+pollsRouter.post('/:slug/votes', castVote);
+pollsRouter.get('/:slug/results', getResults);
 
 export default pollsRouter
 
