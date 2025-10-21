@@ -112,3 +112,41 @@ export const startVoting = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Something went wrong." });
     }
 }
+
+//TODO validate token, find poll, check token matches, check phase = voting, find winning idea, update phase to closed
+export const closePoll = async (req: Request, res: Response) => {
+    try {
+        const slug = req.params.slug;
+        const token = req.headers['x-manage-token'];
+        if (!token || typeof token !== 'string') {
+            return res.status(403).json({ error: "You do not have permission to modify poll." });
+        }
+        const poll = await prisma.poll.findUnique({
+            where: { slug }
+        });
+        if (!poll) {
+            return res.status(404).json({ error: "Poll not found." });
+        }
+
+        if (poll.manageToken !== token) {
+            return res.status(403).json({ error: "invalid manage token" });
+        }
+
+        if (poll.phase !== "VOTING") {
+            return res.status(403).json({ error: "Can only close poll in voting phase." });
+        }
+
+        const updatedPhase = await prisma.poll.update({
+            where: { id: poll.id },
+            data: { phase: 'CLOSED' },
+        });
+
+        return res.status(200).json({
+            phase: updatedPhase.phase,
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Something went wrong." });
+    }
+}

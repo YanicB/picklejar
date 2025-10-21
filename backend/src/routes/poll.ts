@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createPoll, getPollBySlug, startVoting } from '../controllers/polls';
+import { createPoll, getPollBySlug, startVoting, closePoll } from '../controllers/polls';
 import { castVote, getResults } from '../controllers/votes';
 import { addIdea } from '../controllers/ideas';
 
@@ -13,6 +13,7 @@ pollsRouter.post('/:slug/ideas', addIdea);
 pollsRouter.post('/:slug/start-vote', startVoting);
 pollsRouter.post('/:slug/votes', castVote);
 pollsRouter.get('/:slug/results', getResults);
+pollsRouter.get('/:slug/close', closePoll);
 
 export default pollsRouter
 
