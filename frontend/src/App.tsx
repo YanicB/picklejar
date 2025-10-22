@@ -2,15 +2,18 @@ import MainPage from './pages/MainPage'
 import Create from './pages/Create'
 import About from './pages/About'
 import NavBar from './components/NavBar'
+import How from './pages/How'
 import { Routes, Route, Outlet } from 'react-router-dom'
 
 const Layout = () => {
     return (
-        <div>
-            <section>
+        <div className="overflow-hidden bg-[#F8F6F1] h-screen">
+            <header>
                 <NavBar />
-            </section>
-            <Outlet />
+            </header>
+            <main >
+                <Outlet />
+            </main>
         </div>
     )
 }
@@ -20,22 +23,9 @@ function App() {
     return (
         <Routes>
             <Route element={<Layout />}>
-                <Route
-                    path="/"
-                    element={
-                        <>
-                            <section
-                                id="home"
-                                className="w-full min-h-screen flex justify-center items-center"
-                            >
-                                <MainPage />
-                            </section>
-                            <section>
-                                <About />
-                            </section>
-                        </>
-                    }
-                />
+                <Route path="/" element={<MainPage />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/how" element={<How />} />
                 <Route path="/create" element={<Create />} />
             </Route>
         </Routes>

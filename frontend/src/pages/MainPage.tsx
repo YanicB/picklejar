@@ -1,14 +1,14 @@
+import { Link } from 'react-router-dom'
 const MainPage = () => {
     return (
-        <div className="flex flex-col">
-            <main className="flex-1 flex items-center justify-center">
-                <div className="text-center space-y-2">
-
-                    <p className="text-xl font-bold">in a pickle?</p>
-                    <button className="bg-green-300 py-1 px-3 font-semibold rounded-md">get started.</button>
-                </div>
-            </main>
-        </div>
+        <section className="w-full min-h-screen flex flex-column items-center justify-center py-12 px-4">
+            <div className="max-w-2xl mx-auto w-full space-y-6 flex flex-col items-center justify-center">
+                <p className="text-xl font-bold">in a pickle?</p>
+                <Link to="/create" className="font-bold bg-green-500 text-center px-6 py-4 rounded-xl hover:bg-green-600">
+                    Get Started
+                </Link>
+            </div>
+        </section>
     )
 
 }
