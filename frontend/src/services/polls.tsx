@@ -20,3 +20,25 @@ export const newIdea = async (text: string, slug: string) => {
     return res.data; // {id, text, authorName, createdAt}
 }
 
+export const startVoting = async (slug: string, manageToken: string) => {
+    const res = await axios.post(`${baseUrl}/polls/${slug}/start-vote`, {}, {
+        headers: {
+            'x-manage-token': manageToken
+        }
+    });
+    return res.data; // phase: {"VOTING"}
+}
+
+export const getResults = async (slug: string) => {
+    const res = await axios.get(`${baseUrl}/polls/${slug}/results`);
+    return res.data; // {ok: true}
+}
+
+export const closePoll = async (slug: string, manageToken: string) => {
+    const res = await axios.post(`${baseUrl}/polls/${slug}/close`, {}, {
+        headers: {
+            'x-manage-token': manageToken
+        }
+    });
+    return res.data; // {phase, "CLOSED" } 
+}
