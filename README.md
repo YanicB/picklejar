@@ -3,7 +3,7 @@
 PickleJar is the LettuceMeet-for-ideas: a lightweight, anonymous idea-sharing and voting app. Hosts create a link, friends drop ideas, then everyone votes. When voting closes, the winner is clear—no bias, no endless back-and-forth.
 
 ## The Problem
-Making group decisions is painful—people talk over each other, louder voices win, and favorites skew choices. PickleJar removes identities from the decision step so ideas compete on merit. It also adds a simple, repeatable flow so groups stop stalling and start deciding.
+Making group decisions is painful, people talk over each other, louder voices win, and favorites skew choices. PickleJar removes identities from the decision step so ideas compete on merit. It also adds a simple, repeatable flow so groups stop stalling and start deciding.
 
 ## How It Works (3 steps)
 1. **Create a poll** → get a shareable link and a private **manage token**.
@@ -17,8 +17,6 @@ Making group decisions is painful—people talk over each other, louder voices w
 - **Single-choice voting** (one vote per participant per poll; re-vote updates)
 - **Clear phases** (`COLLECTING` → `VOTING` → `CLOSED`) with server-enforced rules
 - **Creator controls** with a one-time **manage token** (start/close)
-- **Live or final-only results** (configurable later)
-- **Fast, minimal UI** (mobile friendly)
 
 ## Use Cases
 - **Friends** deciding weekend plans, restaurants, activities  
