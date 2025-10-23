@@ -1,5 +1,5 @@
 import MainPage from './pages/MainPage'
-import Create from './pages/Create'
+import CreatePoll from './pages/CreatePoll'
 import About from './pages/About'
 import NavBar from './components/NavBar'
 import How from './pages/How'
@@ -26,7 +26,7 @@ function App() {
                 <Route path="/" element={<MainPage />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/how" element={<How />} />
-                <Route path="/create" element={<Create />} />
+                <Route path="/create" element={<CreatePoll />} />
             </Route>
         </Routes>
     )
