@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'api'
+const baseUrl = '/api'
 
 export const newPoll = async (title: string) => {
     const res = await axios.post(`${baseUrl}/polls`, {
