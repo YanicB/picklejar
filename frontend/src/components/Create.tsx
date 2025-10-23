@@ -1,26 +1,26 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { newPoll } from '../services/polls'
-    ;
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { newPoll } from '../services/polls';
+;
 const Create = () => {
-    const [title, setTitle] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
-    const navigate = useNavigate()
+    const [title, setTitle] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setIsLoading(true)
+        e.preventDefault();
+        setLoading(true);
         try {
-            const data = await newPoll(title.trim())
-            const { poll, manageToken } = data
+            const data = await newPoll(title.trim());
+            const { poll, manageToken } = data;
 
-            localStorage.setItem(`poll_${poll.slug}_token`, manageToken)
-            navigate(`/poll/${poll.slug}`)
+            localStorage.setItem(`poll_${poll.slug}_token`, manageToken);
+            navigate(`/poll/${poll.slug}`);
         } catch (err: any) {
-            setError(err.response?.data?.error || "Failed to create poll. Please try again.")
+            setError(err.response?.data?.error || "Failed to create poll. Please try again.");
         } finally {
-            setIsLoading(false)
+            setLoading(false);
         }
     }
     return (
@@ -46,10 +46,10 @@ const Create = () => {
                     />
                     <button
                         type="submit"
-                        disabled={isLoading || !title.trim()}
-                        className="w-full bg-primary hover:bg-primary-hover  font-semibold px-6 py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={loading || !title.trim()}
+                        className="w-full bg-green-500 hover:bg-green-600 font-semibold px-6 py-3 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isLoading ? "Creating..." : "Create Jar"}
+                        {loading ? "Creating..." : "Create Jar"}
                     </button>
                 </div>
             </form>
