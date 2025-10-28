@@ -29,6 +29,14 @@ export const startVoting = async (slug: string, manageToken: string) => {
     return res.data; // phase: {"VOTING"}
 }
 
+export const castVote = async (slug: string, participant: { name: string, email?: string }, ideaId: number) => {
+    const res = await axios.post(`${baseUrl}/polls/${slug}/votes`, {
+        participant,
+        ideaId
+    });
+    return res.data // {ok: true}
+}
+
 export const getResults = async (slug: string) => {
     const res = await axios.get(`${baseUrl}/polls/${slug}/results`);
     return res.data; // {ok: true}
