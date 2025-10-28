@@ -1,5 +1,5 @@
 import Jar from '../components/Jar';
-import { getPoll, newIdea } from '../services/polls';
+import { getPoll, newIdea, startVoting, castVote } from '../services/polls';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -11,6 +11,8 @@ const PollsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [addIdea, setAddIdea] = useState('');
+    const [participantName, setParticipantName] = useState('');
+    const [hasVoted, setHasVoted] = useState(false);
 
     const fetchPoll = async () => {
         try {
@@ -29,8 +31,41 @@ const PollsPage = () => {
         }
     }
 
+    const votePhase = async () => {
+        const manageToken = localStorage.getItem(`poll_${slug}_token`);
+        if (!manageToken) {
+            alert("You don't have permission to start voting phase.");
+            return;
+        }
+        if (!slug) return;
+        const res = await startVoting(slug, manageToken);
+        setPhase(res.phase);
+    }
+
+    const handleVote = async (ideaId: number) => {
+        if (!slug || !participantName.trim()) {
+            alert('Please enter your name first');
+            return;
+        }
+
+        try {
+            await castVote(slug, {
+                name: participantName,
+                email: participantName || undefined
+            }, ideaId);
+
+            localStorage.setItem(`poll_${slug}_voted`, 'true');
+
+            setHasVoted(true);
+            alert('Vote cast succesfully.');
+        } catch (err) {
+            alert('Failed to cast vote.');
+        }
+    }
     useEffect(() => {
         fetchPoll();
+        const voted = localStorage.getItem(`poll_${slug}_voted`);
+        if (voted) setHasVoted(true);
     }, [slug]);
 
     const idea = async (e: React.FormEvent) => {
@@ -64,24 +99,13 @@ const PollsPage = () => {
 
     return (
         <section className="min-h-screen flex items-center justify-center py-12 px-4">
-            <div className="max-w-4xl wx-auto space-y-6">
+            <div className="max-w-4xl mx-auto space-y-6">
                 <div className="text-center space-y-2">
                     <h1 className="text-4xl font-bold text-gray-800">{title}</h1>
                     <p className="text-sm text-gray-500 uppercase tracking-wide">
                         Phase: {phase}
                     </p>
                 </div>
-
-                <Jar ideas={ideas} />
-                <form onSubmit={idea}>
-                    <input
-                        value={addIdea}
-                        onChange={(e) => { setAddIdea(e.target.value) }}
-                        placeholder="add idea..."
-                    />
-                    <button type="submit">Add idea</button>
-                </form>
-            </div>
         </section>
     )
 }
