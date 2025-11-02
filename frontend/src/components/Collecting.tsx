@@ -1,22 +1,37 @@
-const Collecting = () => {
-    return <div>
-        phase === 'COLLECTING' && (
-        <div>
-            <Jar ideas={ideas} />
+import Jar from './Jar'
+
+type CollectingProps = {
+    addIdea: string,
+    handleIdeaChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    idea: (e: React.FormEvent) => Promise<void> | void,
+    listIdeas: any[],
+    votePhase: any,
+    slug: string;
+}
+
+const Collecting = ({ slug, votePhase, addIdea, handleIdeaChange, idea, listIdeas }: CollectingProps) => {
+    const manageToken = localStorage.getItem(`poll_${slug}_token`);
+
+
+    return (
+        <div className="flex justify-center items-center">
+            {manageToken && <button onClick={votePhase}>Start Vote</button>}
+            <Jar ideas={listIdeas} />
             <form onSubmit={idea}>
-                <input
-                    value={addIdea}
-                    onChange={(e) => { setAddIdea(e.target.value) }}
-                    placeholder="add idea..."
-                />
-                <button type="submit">Add idea</button>
+                <label>
+                    Idea
+                    <input
+                        type="text"
+                        value={addIdea}
+                        onChange={handleIdeaChange}
+                    />
+                </label>
+                <button type='submit'>
+                    Add Idea
+                </button>
             </form>
-            {localStorage.getItem(`poll_${slug}_token`) && (
-                <button onClick={votePhase}>Start Voting</button>
-            )}
         </div>
-        )
-    </div>
+    )
 }
 
 export default Collecting;
