@@ -6,7 +6,7 @@ type CollectingProps = {
     idea: (e: React.FormEvent) => Promise<void> | void,
     listIdeas: any[],
     votePhase: any,
-    slug: string;
+    slug: string | null;
 }
 
 const Collecting = ({ slug, votePhase, addIdea, handleIdeaChange, idea, listIdeas }: CollectingProps) => {
