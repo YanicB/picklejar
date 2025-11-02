@@ -1,31 +1,36 @@
-const Voting = () => {
-
+type VotingProps = {
+    ideas: any[],
+    handleVote: any,
+    participantChange: any,
+    hasVoted: boolean,
+}
+const Voting = ({ hasVoted, participantChange, ideas, handleVote }: VotingProps) => {
     return (
         <div>
-            <div>
-                <p>Enter your details to vote</p>
-                <input
-                    value={participantName}
-                    onChange={(e) => setParticipantName(e.target.value)}
-                    placeholder="Your name (required)"
-                    required
-                />
-            </div>
-            <div>
-                <p>
-                    Click on an idea to vote for it:
-                </p>
-                {ideas.map((idea: any) => (
-                    <button
-                        key={idea.id}
-                        onClick={() => handleVote(idea.id)}
-                    >
-                        <p>{idea.text}</p>
-                    </button>
-                ))}
-            </div>
-            )
+            {hasVoted ? (<div>You have already voted</div>) : (
+                <div>
+                    <p>
+                        Add name and vote on idea:
+                    </p>
+                    <form>
+                        <input
+                            type="text"
+                            onChange={participantChange}
+                            placeholder="Add name..."
+                        />
+                    </form>
+                    {ideas.map((idea: any) => (
+                        <button
+                            key={idea.id}
+                            onClick={() => handleVote(idea.id)}
+                        >
+                            <p>{idea.text}</p>
+                        </button>
+                    ))}
+                </div>)
+            }
         </div>
+    )
 }
 
 export default Voting;
