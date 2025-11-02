@@ -1,5 +1,6 @@
 import { getPoll, newIdea, startVoting, castVote } from '../services/polls';
 import Collecting from '../components/Collecting';
+import Voting from '../components/Voting';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -78,10 +79,21 @@ const PollsPage = () => {
         setAddIdea(e.target.value);
     }
 
+    const handleParticipantChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setParticipantName(e.target.value);
+    }
+
+    if (!slug) {
+        return <div>Invalid Poll</div>
+    }
+
+    if (loading) return <div>Loading...</div>
+
     return (
         <section className="h-screen w-auto">
             {title}
             {phase === 'COLLECTING' && (<Collecting slug={slug} votePhase={votePhase} listIdeas={ideas} addIdea={addIdea} handleIdeaChange={handleIdeaChange} idea={handleAddIdea} />)}
+            {phase === 'VOTING' && (<Voting hasVoted={hasVoted} participantChange={handleParticipantChange} ideas={ideas} handleVote={handleVote} />)}
         </section>
     )
 }
