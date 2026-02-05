@@ -13,7 +13,7 @@ pollsRouter.post('/:slug/ideas', addIdea);
 pollsRouter.post('/:slug/start-vote', startVoting);
 pollsRouter.post('/:slug/votes', castVote);
 pollsRouter.get('/:slug/results', getResults);
-pollsRouter.get('/:slug/close', closePoll);
+pollsRouter.post('/:slug/close', closePoll);
 
 export default pollsRouter
 
