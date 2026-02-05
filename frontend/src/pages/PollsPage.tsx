@@ -1,6 +1,7 @@
-import { getPoll, newIdea, startVoting, castVote } from '../services/polls';
+import { getPoll, newIdea, startVoting, castVote, getResults } from '../services/polls';
 import Collecting from '../components/Collecting';
 import Voting from '../components/Voting';
+import Closed from '../components/Closed';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -14,6 +15,8 @@ const PollsPage = () => {
     const [addIdea, setAddIdea] = useState('');
     const [participantName, setParticipantName] = useState('');
     const [hasVoted, setHasVoted] = useState(false);
+    const [totals, setTotals] = useState<{ ideaId: number; text: string; count: number }[]>([]);
+    const [participantCount, setParticipantCount] = useState(0);
 
     const fetchPoll = async () => {
         try {
@@ -25,6 +28,12 @@ const PollsPage = () => {
             }
             setPhase(res.phase);
             setTitle(res.title);
+
+            if (res.phase === 'CLOSED') {
+                const resultsRes = await getResults(slug);
+                setTotals(resultsRes.totals);
+                setParticipantCount(resultsRes.participantCount);
+            }
         } catch (err: any) {
             setError('Poll not found');
         } finally {
@@ -94,6 +103,7 @@ const PollsPage = () => {
             {title}
             {phase === 'COLLECTING' && (<Collecting slug={slug} votePhase={votePhase} listIdeas={ideas} addIdea={addIdea} handleIdeaChange={handleIdeaChange} idea={handleAddIdea} />)}
             {phase === 'VOTING' && (<Voting hasVoted={hasVoted} participantChange={handleParticipantChange} ideas={ideas} handleVote={handleVote} />)}
+            {phase === 'CLOSED' && (<Closed totals={totals} participantCount={participantCount} />)}
         </section>
     )
 }
