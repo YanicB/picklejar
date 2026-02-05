@@ -1,4 +1,3 @@
-// TODO make castVote function and getResults function
 import { Request, Response } from 'express'
 import { PrismaClient } from '../../generated/prisma'
 

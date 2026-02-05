@@ -113,7 +113,6 @@ export const startVoting = async (req: Request, res: Response) => {
     }
 }
 
-//TODO validate token, find poll, check token matches, check phase = voting, find winning idea, update phase to closed
 export const closePoll = async (req: Request, res: Response) => {
     try {
         const slug = req.params.slug;

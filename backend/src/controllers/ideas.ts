@@ -24,7 +24,7 @@ export const addIdea = async (req: Request, res: Response) => {
         if (!text) {
             return res.status(400).json({ error: "text cannot be empty." });
         }
-        const authorName = typeof authorRaw === "string" ? authorRaw.trim() : "anomymous";
+        const authorName = typeof authorRaw === "string" ? authorRaw.trim() : "anonymous";
 
         const idea = await prisma.idea.create({
             data: {
