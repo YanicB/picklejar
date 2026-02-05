@@ -49,7 +49,7 @@ const PollsPage = () => {
         try {
             await castVote(slug, {
                 name: participantName,
-                email: participantName || undefined
+                email: undefined
             }, ideaId);
 
             localStorage.setItem(`poll_${slug}_voted`, 'true');
